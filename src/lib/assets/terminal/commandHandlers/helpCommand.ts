@@ -29,6 +29,22 @@ export const helpCommand = () => {
 	]);
 	terminal.write([
 		{
+			type: 'line',
+			content: '  flags:'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
+			content: '    -a '
+		},
+		{
+			type: 'line',
+			content: "Show files in this directory including those starting with '.'"
+		}
+	]);
+	terminal.write([
+		{
 			type: 'bold',
 			content: 'cat <file name> - '
 		},
@@ -45,6 +61,16 @@ export const helpCommand = () => {
 		{
 			type: 'line',
 			content: 'Clear the terminal'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
+			content: 'login <username> <password> - '
+		},
+		{
+			type: 'line',
+			content: 'Login to a different account.'
 		}
 	]);
 };

@@ -51,12 +51,14 @@ export const readFile = (params: string[]) => {
 		return;
 	}
 
-	terminal.write([
-		{
-			type: 'line',
-			content: f.content
-		}
-	]);
+	for (const item of f.content) {
+		terminal.write([
+			{
+				type: 'line',
+				content: item
+			}
+		]);
+	}
 
 	return;
 };

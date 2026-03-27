@@ -32,8 +32,8 @@ const commands: Record<string, (params: string[]) => void> = {
 			}
 		]);
 	},
-	ls: () => {
-		lsCommand();
+	ls: (params) => {
+		lsCommand(params);
 	},
 	cat: readFile,
 	open: readFile,

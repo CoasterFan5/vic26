@@ -39,7 +39,7 @@
 {/snippet}
 
 {#each line as c, index (index)}
-	{@render rendererMap[c.type](c.content)}
+	&ZeroWidthSpace;{@render rendererMap[c.type](c.content)}
 {/each}
 
 <style lang="scss">
