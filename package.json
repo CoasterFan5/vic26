@@ -36,5 +36,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"@fontsource-variable/geist-mono": "^5.2.7"
 	}
 }
