@@ -3,9 +3,11 @@
 	import type { LineComponent, LineType } from './LineType';
 
 	const {
-		line
+		line,
+		onMount
 	}: {
 		line: LineComponent;
+		onMount?: VoidFunction;
 	} = $props();
 
 	const rendererMap: Record<LineType, Snippet<[string]>> = {
@@ -14,6 +16,10 @@
 		bold: boldRender,
 		error: errorRender
 	};
+
+	$effect(() => {
+		onMount?.();
+	});
 </script>
 
 {#snippet contentRender(content: string)}

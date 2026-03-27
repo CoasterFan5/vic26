@@ -7,6 +7,17 @@
 	const username = 'dan@it.glimpse.com';
 
 	let inputValue = $state('');
+	let terminalElement: HTMLDivElement | undefined = $state(undefined);
+
+	const scrollToBottom = () => {
+		if (terminalElement) {
+			terminalElement.scrollTop = terminalElement.scrollHeight;
+		}
+	};
+
+	lines.subscribe(() => {
+		scrollToBottom();
+	});
 </script>
 
 <svelte:window
@@ -32,7 +43,6 @@
 				}
 			]);
 			handleCommand(inputValue);
-
 			inputValue = '';
 		}
 		if (k == 'backspace') {
@@ -44,10 +54,15 @@
 	}}
 />
 
-<div class="terminal">
+<div class="terminal" bind:this={terminalElement}>
 	{#each $lines as line, index (index)}
 		<span class="line">
-			<LineRenderer {line} />
+			<LineRenderer
+				{line}
+				onMount={() => {
+					scrollToBottom();
+				}}
+			/>
 		</span>
 	{/each}
 	<span class="line">
@@ -61,6 +76,11 @@
 		flex-direction: column;
 		align-items: start;
 		justify-content: start;
+		height: 100vh;
+		width: 100%;
+		overflow-y: auto;
+		padding: 0.5rem;
+		box-sizing: border-box;
 	}
 
 	.white {

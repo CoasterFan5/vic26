@@ -31,11 +31,21 @@ export const readFile = (params: string[]) => {
 	}
 
 	const f = b[params[0]];
-	if (!f || f.type != 'file') {
+	if (!f) {
 		terminal.write([
 			{
 				type: 'error',
 				content: 'File not found'
+			}
+		]);
+		return;
+	}
+
+	if (f.type == 'directory') {
+		terminal.write([
+			{
+				type: 'error',
+				content: `${params[0]} is a directory, not a file.`
 			}
 		]);
 		return;

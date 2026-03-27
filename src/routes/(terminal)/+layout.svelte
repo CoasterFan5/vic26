@@ -20,5 +20,8 @@
 		font-family: 'Geist Mono Variable', monospace;
 		background: var(--background);
 		color: var(--color);
+		height: 100dvh;
+		margin: 0;
+		padding: 0;
 	}
 </style>
