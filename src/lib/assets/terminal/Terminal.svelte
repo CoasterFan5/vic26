@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { accountState, type ThemeState } from './accounts/accountState';
+	import { accountState, logoutAccount, type ThemeState } from './accounts/accountState';
 	import { handleCommand } from './commandHandlers/index';
 	import LineRenderer from './LineRenderer.svelte';
 	import { lines, terminal } from './terminal';
@@ -39,6 +39,7 @@
 			return;
 		}
 
+		logoutAccount();
 		terminal.clear();
 		inputValue = '';
 		countdownSeconds = SESSION_DURATION_SECONDS;

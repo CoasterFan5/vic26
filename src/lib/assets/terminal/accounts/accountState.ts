@@ -7,11 +7,19 @@ export type AccountState = {
 	themeState: ThemeState;
 };
 
-export const accountState = writable<AccountState>({
-	username: 'dan@it.glimpse.com',
-	themeState: 'green'
-});
+const getInitialAccountState = () => {
+	return {
+		username: 'dan@it.glimpse.com',
+		themeState: 'green'
+	} as AccountState;
+};
+
+export const accountState = writable<AccountState>(getInitialAccountState());
 
 export const loginAccount = (account: AccountState) => {
 	accountState.set(account);
+};
+
+export const logoutAccount = () => {
+	accountState.set(getInitialAccountState());
 };
