@@ -14,7 +14,8 @@
 <style lang="scss">
 	:global(body) {
 		--background: #000;
-		--color: #03ff00;
+		--textGreen: #03ff00;
+		--textAmber: #fa9726;
 		--white: #f4f4f4;
 		--yellow: #facc15;
 

@@ -1,13 +1,16 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { LineComponent, LineType } from './LineType';
+	import type { ThemeState } from './accounts/accountState';
 
 	const {
 		line,
-		onMount
+		onMount,
+		theme
 	}: {
 		line: LineComponent;
 		onMount?: VoidFunction;
+		theme: ThemeState;
 	} = $props();
 
 	const rendererMap: Record<LineType, Snippet<[string]>> = {
@@ -39,19 +42,28 @@
 {/snippet}
 
 {#each line as c, index (index)}
-	&ZeroWidthSpace;{@render rendererMap[c.type](c.content)}
+	<span class="line {theme}">
+		&ZeroWidthSpace;{@render rendererMap[c.type](c.content)}
+	</span>
 {/each}
 
 <style lang="scss">
+	.green {
+		color: var(--textGreen);
+	}
+
+	.amber {
+		color: var(--textAmber);
+	}
+
+	/* global termianl styles */
+	.error {
+		color: #f54242;
+	}
 	.name {
 		color: var(--white);
 	}
-
 	.bold {
 		font-weight: 700;
-	}
-
-	.error {
-		color: #f54242;
 	}
 </style>

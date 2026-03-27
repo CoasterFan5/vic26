@@ -30,7 +30,10 @@ export const loginCommand = (params: string[]) => {
 		return;
 	}
 
-	loginAccount(username);
+	loginAccount({
+		username,
+		themeState: 'amber'
+	});
 
 	terminal.write([
 		{

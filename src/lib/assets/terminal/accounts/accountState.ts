@@ -1,27 +1,17 @@
 import { writable } from 'svelte/store';
 
-export type AuthAccount = {
-	username: string;
-};
+export type ThemeState = 'green' | 'amber';
 
 export type AccountState = {
-	isAuthenticated: boolean;
-	account: AuthAccount;
-	lastLoginAt: string | null;
+	username: string;
+	themeState: ThemeState;
 };
 
 export const accountState = writable<AccountState>({
-	isAuthenticated: false,
-	account: {
-		username: 'dan@it.glimpse.com'
-	},
-	lastLoginAt: null
+	username: 'dan@it.glimpse.com',
+	themeState: 'green'
 });
 
-export const loginAccount = (username: string) => {
-	accountState.set({
-		isAuthenticated: true,
-		account: { username },
-		lastLoginAt: new Date().toISOString()
-	});
+export const loginAccount = (account: AccountState) => {
+	accountState.set(account);
 };

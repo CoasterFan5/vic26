@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { accountState } from './accounts/accountState';
+	import { accountState, type ThemeState } from './accounts/accountState';
 	import { handleCommand } from './commandHandlers/index';
 	import LineRenderer from './LineRenderer.svelte';
 	import { lines, terminal } from './terminal';
@@ -8,9 +8,12 @@
 	let historyIndex = -1;
 
 	let username = $state('dan@it.glimpse.com');
+	let theme: ThemeState = $state('green');
 	accountState.subscribe((v) => {
-		username = v.account.username;
+		username = v.username;
+		theme = v.themeState;
 	});
+
 	const SESSION_DURATION_SECONDS = 60;
 
 	let inputValue = $state('');
@@ -111,7 +114,12 @@
 	}}
 />
 
-<div class="terminal" bind:this={terminalElement}>
+<div
+	class="terminal"
+	bind:this={terminalElement}
+	class:green={theme == 'green'}
+	class:amber={theme == 'amber'}
+>
 	{#if !sessionEnd}
 		<div class="countdown-badge">
 			<span class="warning">Warden reset in {countdownSeconds}s</span>
@@ -121,6 +129,7 @@
 		<span class="line">
 			<LineRenderer
 				{line}
+				{theme}
 				onMount={() => {
 					scrollToBottom();
 				}}
@@ -129,12 +138,29 @@
 	{/each}
 	{#if !sessionEnd}
 		<span class="line">
-			<span class="white"> {username} %&nbsp</span><span>{inputValue}</span>
+			<LineRenderer
+				line={[
+					{ type: 'user', content: `${username} % ` },
+					{
+						type: 'line',
+						content: inputValue
+					}
+				]}
+				{theme}
+			/>
 		</span>
 	{/if}
 </div>
 
 <style lang="scss">
+	.green {
+		background: black;
+	}
+
+	.amber {
+		background: #1e140a;
+	}
+
 	.terminal {
 		position: relative;
 		display: flex;
@@ -146,10 +172,6 @@
 		overflow-y: auto;
 		padding: 0.5rem;
 		box-sizing: border-box;
-	}
-
-	.white {
-		color: var(--white);
 	}
 
 	.warning {
