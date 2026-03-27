@@ -2,6 +2,7 @@ import { lsCommand } from '../fileRouting/ls';
 import { readFile } from '../fileRouting/readFile';
 import { lines, terminal } from '../terminal';
 import { helpCommand } from './helpCommand';
+import { loginCommand } from './loginCommand';
 
 export const handleCommand = (cmd: string) => {
 	const parsed = cmd.split(' ');
@@ -37,5 +38,6 @@ const commands: Record<string, (params: string[]) => void> = {
 	},
 	cat: readFile,
 	open: readFile,
-	read: readFile
+	read: readFile,
+	login: loginCommand
 };

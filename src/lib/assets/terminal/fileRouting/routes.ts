@@ -1,4 +1,4 @@
-import { getSecrets } from '../secrets/secrets';
+import { getAccounts } from '../accounts/secrets';
 
 type FileType =
 	| {
@@ -36,7 +36,7 @@ export const files: FileTypeRecord = {
 			'I know its strange that I am leaving secret files. Last one I promise.',
 			'To access the access logs, you will need an account with log access perms',
 			'I have generated one for you: `logs@it.glimpse.com`',
-			`The password is base64 encoded, so decode it first: \`${getSecrets().logAccount.passwordBase64}\``
+			`The password is base64 encoded, so decode it first: \`${getAccounts().logAccount.passwordBase64}\``
 		]
 	}
 };

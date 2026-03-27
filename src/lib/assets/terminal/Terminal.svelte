@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { accountState } from './accounts/accountState';
 	import { handleCommand } from './commandHandlers/index';
 	import LineRenderer from './LineRenderer.svelte';
 	import { lines, terminal } from './terminal';
@@ -6,7 +7,10 @@
 	const historyList: string[] = [];
 	let historyIndex = -1;
 
-	const username = 'dan@it.glimpse.com';
+	let username = $state('dan@it.glimpse.com');
+	accountState.subscribe((v) => {
+		username = v.account.username;
+	});
 	const SESSION_DURATION_SECONDS = 60;
 
 	let inputValue = $state('');
