@@ -63,6 +63,16 @@
 </script>
 
 <svelte:window
+	onpaste={(e) => {
+		if (sessionEnd) {
+			e.preventDefault();
+			return;
+		}
+
+		const pasted = e.clipboardData?.getData('text') ?? '';
+		inputValue += pasted;
+		e.preventDefault();
+	}}
 	onkeypress={(e) => {
 		if (sessionEnd) {
 			e.preventDefault();
