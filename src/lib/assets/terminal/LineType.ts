@@ -1,4 +1,4 @@
-export type LineType = 'user' | 'line' | 'bold';
+export type LineType = 'user' | 'line' | 'bold' | 'error';
 
 export type LineComponent = {
 	content: string;

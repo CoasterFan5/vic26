@@ -11,7 +11,8 @@
 	const rendererMap: Record<LineType, Snippet<[string]>> = {
 		line: contentRender,
 		user: userRender,
-		bold: boldRender
+		bold: boldRender,
+		error: errorRender
 	};
 </script>
 
@@ -27,6 +28,10 @@
 	<span class="bold">{content}</span>
 {/snippet}
 
+{#snippet errorRender(content: string)}
+	<span class="error">{content}</span>
+{/snippet}
+
 {#each line as c, index (index)}
 	{@render rendererMap[c.type](c.content)}
 {/each}
@@ -38,5 +43,9 @@
 
 	.bold {
 		font-weight: 700;
+	}
+
+	.error {
+		color: #f54242;
 	}
 </style>

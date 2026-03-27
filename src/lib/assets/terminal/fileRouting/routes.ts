@@ -18,5 +18,9 @@ export const files: FileTypeRecord = {
 	'readme.txt': {
 		type: 'file',
 		content: 'read'
+	},
+	'readme.md': {
+		type: 'file',
+		content: 'read 2'
 	}
 };

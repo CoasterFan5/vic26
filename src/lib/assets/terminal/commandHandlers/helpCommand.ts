@@ -30,6 +30,36 @@ export const helpCommand = () => {
 	terminal.write([
 		{
 			type: 'bold',
+			content: 'cat <file name> - '
+		},
+		{
+			type: 'line',
+			content: 'Read file'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
+			content: 'read <file name> - '
+		},
+		{
+			type: 'line',
+			content: 'Alias for cat'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
+			content: 'open <file name> - '
+		},
+		{
+			type: 'line',
+			content: 'Alias for cat'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
 			content: 'clear - '
 		},
 		{

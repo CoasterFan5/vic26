@@ -1,15 +1,25 @@
 import { lsCommand } from '../fileRouting/ls';
+import { readFile } from '../fileRouting/readFile';
 import { lines, terminal } from '../terminal';
 import { helpCommand } from './helpCommand';
 
 export const handleCommand = (cmd: string) => {
-	const c = cmd.split(' ')[0];
+	const parsed = cmd.split(' ');
+	const c = parsed[0];
+	const params = parsed.slice(1);
 	if (commands[c]) {
-		commands[c]();
+		commands[c](params);
+	} else {
+		terminal.write([
+			{
+				type: 'error',
+				content: 'Command not found'
+			}
+		]);
 	}
 };
 
-const commands: Record<string, VoidFunction> = {
+const commands: Record<string, (params: string[]) => void> = {
 	help: helpCommand,
 	clear: () => {
 		lines.update(() => {
@@ -24,5 +34,8 @@ const commands: Record<string, VoidFunction> = {
 	},
 	ls: () => {
 		lsCommand();
-	}
+	},
+	cat: readFile,
+	open: readFile,
+	read: readFile
 };
