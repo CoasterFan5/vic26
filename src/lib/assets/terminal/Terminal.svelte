@@ -53,7 +53,7 @@
 				clearInterval(i);
 				terminal.clear();
 				terminal.write([
-					{ type: 'error', content: 'Session ended by Glimpse Warden. Press any key to reconnect.' }
+					{ type: 'error', content: 'Session ended by IDS Warden. Press any key to reconnect.' }
 				]);
 			}
 		}, 1_000);
@@ -123,7 +123,7 @@
 >
 	{#if !sessionEnd}
 		<div class="countdown-badge">
-			<span class="warning">Warden reset in {countdownSeconds}s</span>
+			<span class="warning">Warden kick in {countdownSeconds}s</span>
 		</div>
 	{/if}
 	{#each $lines as line, index (index)}

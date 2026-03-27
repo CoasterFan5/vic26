@@ -24,7 +24,7 @@ export const terminal = {
 	},
 	writeDefaultLines: () => {
 		terminal.writeBasicString('Glimpse Inc Terminal System (c) 2026 Glimpse Inc.');
-		terminal.writeBasicString('Glimpse Inc Warden will kick you from this system in 60 seconds');
+		terminal.writeBasicString('IDS Warden will kick you from this system in 60 seconds');
 		terminal.writeBasicString('Type help and press enter for help');
 		console.log('Wrote basic lines.');
 	}
