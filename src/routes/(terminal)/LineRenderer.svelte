@@ -10,7 +10,8 @@
 
 	const rendererMap: Record<LineType, Snippet<[string]>> = {
 		line: contentRender,
-		user: userRender
+		user: userRender,
+		bold: boldRender
 	};
 </script>
 
@@ -19,9 +20,23 @@
 {/snippet}
 
 {#snippet userRender(content: string)}
-	{content}
+	<span class="name">{content}</span>
+{/snippet}
+
+{#snippet boldRender(content: string)}
+	<span class="bold">{content}</span>
 {/snippet}
 
 {#each line as c, index (index)}
 	{@render rendererMap[c.type](c.content)}
 {/each}
+
+<style lang="scss">
+	.name {
+		color: var(--white);
+	}
+
+	.bold {
+		font-weight: 700;
+	}
+</style>

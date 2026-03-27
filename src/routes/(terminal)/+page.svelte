@@ -1,12 +1,10 @@
 <script lang="ts">
+	import { handleCommand } from './commandHandlers';
 	import LineRenderer from './LineRenderer.svelte';
 	import type { LineComponent } from './LineType';
+	import { lines, terminal } from './terminal';
 
-	const lines: LineComponent[] = [
-		[{ type: 'line', content: 'Glimpse Inc Termial System (c) 2026 Glimpse Inc.' }],
-		[{ type: 'line', content: 'Glimpse Inc Warden will kick you from this system in 60 seconds' }],
-		[{ type: 'line', content: 'Type help and press enter for help' }]
-	];
+	const username = 'dan@it.glimpse.com';
 
 	let inputValue = $state('');
 </script>
@@ -22,7 +20,21 @@
 	}}
 	onkeydown={(e) => {
 		const k = e.key.toLowerCase();
-		console.log(k);
+		if (k == 'enter') {
+			terminal.write([
+				{
+					type: 'user',
+					content: `${username} % `
+				},
+				{
+					type: 'line',
+					content: inputValue
+				}
+			]);
+			handleCommand(inputValue);
+
+			inputValue = '';
+		}
 		if (k == 'backspace') {
 			inputValue = inputValue.substring(0, inputValue.length - 1);
 		}
@@ -33,13 +45,13 @@
 />
 
 <div class="terminal">
-	{#each lines as line, index (index)}
+	{#each $lines as line, index (index)}
 		<span class="line">
 			<LineRenderer {line} />
 		</span>
 	{/each}
 	<span class="line">
-		<span class="white"> dan@it.glimpse.com %&nbsp</span><span>{inputValue}</span>
+		<span class="white"> {username} %&nbsp</span><span>{inputValue}</span>
 	</span>
 </div>
 
