@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { handleCommand } from './commandHandlers/index';
 	import LineRenderer from './LineRenderer.svelte';
-	import type { LineComponent } from './LineType';
+	import { generateSecrets } from './secrets/secrets';
 	import { lines, terminal } from './terminal';
+
+	const historyList: string[] = [];
+	let historyIndex = -1;
 
 	const username = 'dan@it.glimpse.com';
 
@@ -43,6 +46,8 @@
 				}
 			]);
 			handleCommand(inputValue);
+			historyList.unshift(inputValue);
+			historyIndex = -1;
 			inputValue = '';
 		}
 		if (k == 'backspace') {
@@ -50,6 +55,14 @@
 		}
 		if (k == 'c' && e.ctrlKey) {
 			inputValue = '';
+		}
+		if (k == 'arrowup') {
+			historyIndex += 1;
+			inputValue = historyList[historyIndex];
+		}
+		if (k == 'arrowdown') {
+			historyIndex -= 1;
+			inputValue = historyList[historyIndex];
 		}
 	}}
 />
