@@ -16,6 +16,7 @@
 		--background: #000;
 		--color: #03ff00;
 		--white: #f4f4f4;
+		--yellow: #facc15;
 
 		font-family: 'Geist Mono Variable', monospace;
 		background: var(--background);

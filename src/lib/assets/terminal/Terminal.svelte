@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { handleCommand } from './commandHandlers/index';
 	import LineRenderer from './LineRenderer.svelte';
-	import { generateSecrets } from './secrets/secrets';
 	import { lines, terminal } from './terminal';
 
 	const historyList: string[] = [];
 	let historyIndex = -1;
 
 	const username = 'dan@it.glimpse.com';
+	const SESSION_DURATION_SECONDS = 60;
 
 	let inputValue = $state('');
 	let terminalElement: HTMLDivElement | undefined = $state(undefined);
@@ -21,18 +21,58 @@
 	lines.subscribe(() => {
 		scrollToBottom();
 	});
+
+	let sessionEnd = $state(true);
+	let countdownSeconds = $state(SESSION_DURATION_SECONDS);
+
+	let i = setInterval(() => {});
+
+	const initTerminal = () => {
+		if (!sessionEnd) {
+			return;
+		}
+
+		terminal.clear();
+		inputValue = '';
+		countdownSeconds = SESSION_DURATION_SECONDS;
+		terminal.writeDefaultLines();
+		sessionEnd = false;
+		clearInterval(i);
+		i = setInterval(() => {
+			countdownSeconds -= 1;
+			if (countdownSeconds <= 0) {
+				sessionEnd = true;
+				clearInterval(i);
+				terminal.clear();
+				terminal.write([
+					{ type: 'error', content: 'Session ended by Glimpse Warden. Press any key to reconnect.' }
+				]);
+			}
+		}, 1_000);
+	};
+
+	initTerminal();
 </script>
 
 <svelte:window
 	onkeypress={(e) => {
+		if (sessionEnd) {
+			e.preventDefault();
+			return;
+		}
 		// special handlers
 		if (e.key.length != 1) {
 			return;
 		}
 		inputValue += e.key;
-		e.preventDefault();
 	}}
 	onkeydown={(e) => {
+		if (sessionEnd) {
+			initTerminal();
+			e.preventDefault();
+			return;
+		}
+
 		const k = e.key.toLowerCase();
 		if (k == 'enter') {
 			terminal.write([
@@ -68,6 +108,11 @@
 />
 
 <div class="terminal" bind:this={terminalElement}>
+	{#if !sessionEnd}
+		<div class="countdown-badge">
+			<span class="warning">Warden reset in {countdownSeconds}s</span>
+		</div>
+	{/if}
 	{#each $lines as line, index (index)}
 		<span class="line">
 			<LineRenderer
@@ -78,13 +123,16 @@
 			/>
 		</span>
 	{/each}
-	<span class="line">
-		<span class="white"> {username} %&nbsp</span><span>{inputValue}</span>
-	</span>
+	{#if !sessionEnd}
+		<span class="line">
+			<span class="white"> {username} %&nbsp</span><span>{inputValue}</span>
+		</span>
+	{/if}
 </div>
 
 <style lang="scss">
 	.terminal {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: start;
@@ -98,5 +146,21 @@
 
 	.white {
 		color: var(--white);
+	}
+
+	.warning {
+		color: var(--yellow);
+	}
+
+	.countdown-badge {
+		position: fixed;
+		top: 0.5rem;
+		right: 0.5rem;
+		padding: 0.2rem 0.5rem;
+		border: 1px solid var(--yellow);
+		background: color-mix(in srgb, var(--background) 85%, var(--yellow) 15%);
+		opacity: 0.95;
+		pointer-events: none;
+		z-index: 1000;
 	}
 </style>
