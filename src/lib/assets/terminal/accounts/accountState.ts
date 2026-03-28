@@ -5,12 +5,14 @@ export type ThemeState = 'green' | 'amber';
 export type AccountState = {
 	username: string;
 	themeState: ThemeState;
+	clearance: number;
 };
 
 const getInitialAccountState = () => {
 	return {
 		username: 'dan@it.glimpse.com',
-		themeState: 'green'
+		themeState: 'green',
+		clearance: 0
 	} as AccountState;
 };
 

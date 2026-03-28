@@ -32,7 +32,8 @@ export const loginCommand = (params: string[]) => {
 
 	loginAccount({
 		username,
-		themeState: 'amber'
+		themeState: 'amber',
+		clearance: 1
 	});
 
 	terminal.write([

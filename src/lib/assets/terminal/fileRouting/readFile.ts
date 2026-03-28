@@ -1,6 +1,13 @@
+import { get } from 'svelte/store';
+import { accountState } from '../accounts/accountState';
 import { terminal } from '../terminal';
-import { files } from './routes';
+import { files, type FileType } from './routes';
 import { getActiveDirectory } from './directoryManager';
+
+const hasAccess = (file: FileType, accountClearance: number): boolean => {
+	const requiredClearance = file.minClearance ?? 0;
+	return accountClearance >= requiredClearance;
+};
 
 export const readFile = (params: string[]) => {
 	if (params.length < 1) {
@@ -13,12 +20,26 @@ export const readFile = (params: string[]) => {
 		return;
 	}
 
+	const currentAccount = get(accountState);
+	const activeClearance = currentAccount.clearance;
+
 	const ad = getActiveDirectory();
 	let b = files;
 
 	for (const key of ad) {
 		const a = b[key];
-		if (a.type != 'directory') {
+
+		if (!a) {
+			terminal.write([
+				{
+					type: 'error',
+					content: 'Directory not found'
+				}
+			]);
+			return;
+		}
+
+		if (a.type !== 'directory') {
 			terminal.write([
 				{
 					type: 'error',
@@ -27,10 +48,22 @@ export const readFile = (params: string[]) => {
 			]);
 			return;
 		}
+
+		if (!hasAccess(a, activeClearance)) {
+			terminal.write([
+				{
+					type: 'error',
+					content: 'Permission denied: Elevated access required.'
+				}
+			]);
+			return;
+		}
+
 		b = a.children;
 	}
 
-	const f = b[params[0]];
+	const targetName = params[0];
+	const f = b[targetName];
 	if (!f) {
 		terminal.write([
 			{
@@ -41,11 +74,21 @@ export const readFile = (params: string[]) => {
 		return;
 	}
 
-	if (f.type == 'directory') {
+	if (!hasAccess(f, activeClearance)) {
 		terminal.write([
 			{
 				type: 'error',
-				content: `${params[0]} is a directory, not a file.`
+				content: 'Permission denied: Elevated access required.'
+			}
+		]);
+		return;
+	}
+
+	if (f.type === 'directory') {
+		terminal.write([
+			{
+				type: 'error',
+				content: `${targetName} is a directory, not a file.`
 			}
 		]);
 		return;
@@ -59,6 +102,4 @@ export const readFile = (params: string[]) => {
 			}
 		]);
 	}
-
-	return;
 };
