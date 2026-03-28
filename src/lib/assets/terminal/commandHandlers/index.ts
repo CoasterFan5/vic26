@@ -1,4 +1,6 @@
+import { cdCommand } from '../fileRouting/cd';
 import { lsCommand } from '../fileRouting/ls';
+import { pwd } from '../fileRouting/pwd';
 import { readFile } from '../fileRouting/readFile';
 import { lines, terminal } from '../terminal';
 import { helpCommand } from './helpCommand';
@@ -39,5 +41,7 @@ const commands: Record<string, (params: string[]) => void> = {
 	cat: readFile,
 	open: readFile,
 	read: readFile,
-	login: loginCommand
+	login: loginCommand,
+	cd: cdCommand,
+	pwd
 };
