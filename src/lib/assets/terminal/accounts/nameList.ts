@@ -1,11 +1,1 @@
-export const names = [
-	'serena',
-	'chuck',
-	'dan',
-	'blair',
-	'georgina',
-	'nate',
-	'jenny',
-	'lily',
-	'bart'
-];
+export const names = ['serena', 'chuck', 'blair', 'georgina', 'nate', 'jenny', 'lily', 'bart'];
