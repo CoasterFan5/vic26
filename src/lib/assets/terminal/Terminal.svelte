@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { accountState, logoutAccount, type ThemeState } from './accounts/accountState';
 	import { handleCommand } from './commandHandlers/index';
-	import { resetActiveDirectory } from './fileRouting/directoryManager';
+	import {
+		getActiveDirectory,
+		getActiveDirectorySingleWord,
+		resetActiveDirectory
+	} from './fileRouting/directoryManager';
 	import LineRenderer from './LineRenderer.svelte';
 	import { lines, terminal } from './terminal';
 
@@ -96,10 +100,7 @@
 		const k = e.key.toLowerCase();
 		if (k == 'enter') {
 			terminal.write([
-				{
-					type: 'user',
-					content: `${username} % `
-				},
+				{ type: 'user', content: `${username} ${getActiveDirectorySingleWord()} % ` },
 				{
 					type: 'line',
 					content: inputValue
@@ -154,7 +155,7 @@
 		<span class="line">
 			<LineRenderer
 				line={[
-					{ type: 'user', content: `${username} % ` },
+					{ type: 'user', content: `${username} ${getActiveDirectorySingleWord()} % ` },
 					{
 						type: 'line',
 						content: inputValue
