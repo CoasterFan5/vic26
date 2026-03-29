@@ -17,7 +17,8 @@
 		line: contentRender,
 		user: userRender,
 		bold: boldRender,
-		error: errorRender
+		error: errorRender,
+		boldUnderline: boldUnderlineRender
 	};
 
 	$effect(() => {
@@ -35,6 +36,10 @@
 
 {#snippet boldRender(content: string)}
 	<span class="bold">{content}</span>
+{/snippet}
+
+{#snippet boldUnderlineRender(content: string)}
+	<span class="bold underline">{content}</span>
 {/snippet}
 
 {#snippet errorRender(content: string)}
@@ -76,5 +81,9 @@
 
 	.bold {
 		font-weight: 700;
+	}
+
+	.underline {
+		text-decoration: underline;
 	}
 </style>

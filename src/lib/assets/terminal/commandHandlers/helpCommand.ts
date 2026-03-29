@@ -3,8 +3,8 @@ import { terminal } from '../terminal';
 export const helpCommand = () => {
 	terminal.write([
 		{
-			type: 'line',
-			content: 'Help Menu'
+			type: 'boldUnderline',
+			content: 'Command List'
 		}
 	]);
 	terminal.write([
@@ -20,27 +20,11 @@ export const helpCommand = () => {
 	terminal.write([
 		{
 			type: 'bold',
-			content: 'ls - '
+			content: 'ls [-a] - '
 		},
 		{
 			type: 'line',
-			content: 'List files in this directory'
-		}
-	]);
-	terminal.write([
-		{
-			type: 'line',
-			content: '  flags:'
-		}
-	]);
-	terminal.write([
-		{
-			type: 'bold',
-			content: '    -a '
-		},
-		{
-			type: 'line',
-			content: "Show files in this directory including those starting with '.'"
+			content: 'List files in this directory, add the -a to show all files.'
 		}
 	]);
 	terminal.write([
@@ -71,6 +55,16 @@ export const helpCommand = () => {
 		{
 			type: 'line',
 			content: 'Login to a different account.'
+		}
+	]);
+	terminal.write([
+		{
+			type: 'bold',
+			content: 'cd <path> '
+		},
+		{
+			type: 'line',
+			content: 'Navigate to a different directory. Use ../ to go back.'
 		}
 	]);
 };
