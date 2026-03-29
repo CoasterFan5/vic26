@@ -6,6 +6,6 @@ export const names = [
 	'georgina',
 	'nate',
 	'jenny',
-	'lilly',
+	'lily',
 	'bart'
 ];

@@ -51,7 +51,7 @@
 		terminal.writeDefaultLines();
 		sessionEnd = false;
 		clearInterval(i);
-		i = setInterval(() => {
+		/* i = setInterval(() => {
 			countdownSeconds -= 1;
 			if (countdownSeconds <= 0) {
 				sessionEnd = true;
@@ -62,7 +62,7 @@
 					{ type: 'error', content: 'Session ended by IDS Warden. Press any key to reconnect.' }
 				]);
 			}
-		}, 1_000);
+			}, 1_000); */
 	};
 
 	initTerminal();
@@ -135,11 +135,13 @@
 	class:amber={theme == 'amber'}
 	class:redTheme={theme == 'red'}
 >
+	<!--
 	{#if !sessionEnd}
 		<div class="countdown-badge">
 			<span class="warning">Warden kick in {countdownSeconds}s</span>
 		</div>
 	{/if}
+	-->
 	{#each $lines as line, index (index)}
 		<span class="line">
 			<LineRenderer
