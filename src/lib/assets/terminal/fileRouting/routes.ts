@@ -1,4 +1,6 @@
 import { getAccounts } from '../accounts/secrets';
+import { companyEmail, prEmail } from './customRoutes/companyEmail';
+import { newsArticle } from './customRoutes/newsArticle';
 
 export type FileType =
 	| {
@@ -15,6 +17,7 @@ export type FileType =
 export type FileTypeRecord = Record<string, FileType>;
 
 export const files: FileTypeRecord = {
+	'news_email.log': companyEmail,
 	'mission.md': {
 		type: 'file',
 		content: [
@@ -41,6 +44,7 @@ export const files: FileTypeRecord = {
 		type: 'directory',
 		minClearance: 1,
 		children: {
+			'news_article.log': newsArticle,
 			'slack_dump.txt': {
 				type: 'file',
 				minClearance: 1,
@@ -67,6 +71,7 @@ export const files: FileTypeRecord = {
 		type: 'directory',
 		minClearance: 2,
 		children: {
+			'pr_email.log': prEmail,
 			'memo.txt': {
 				type: 'file',
 				minClearance: 2,
