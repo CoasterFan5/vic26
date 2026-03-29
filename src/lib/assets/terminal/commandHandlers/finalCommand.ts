@@ -4,8 +4,8 @@ export const finalCommand = (params: string[]) => {
 	if (params.length < 1) {
 		terminal.writeBasicString('Trace log:');
 		terminal.writeBasicString('[0:31] Jared@tempt.optical: mkaccount logs@it.glimpse.com');
-		terminal.writeBasicString('[0:32] Jared@tempt.optical: touch .secrets.md');
-		terminal.writeBasicString('[0:34] Jared@tempt.optical: touch mission.md');
+		terminal.writeBasicString('[0:32] Jared@tempt.optical: mkfile .secrets.md');
+		terminal.writeBasicString('[0:34] Jared@tempt.optical: mkfile mission.md');
 		terminal.writeBasicString(
 			'[0:37] Jared@tempt.optical: snd -- "I have planted the seed, here to hoping Dan finds the secrets"'
 		);

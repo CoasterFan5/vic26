@@ -21,11 +21,10 @@ export const files: FileTypeRecord = {
 	'mission.md': {
 		type: 'file',
 		content: [
-			'# URGENT ',
+			'# URGENT ASSIGNMENT ',
 			'Dan, something urgent has come up.',
 			'Someone from tempt optical breached our servers and stole important info regarding Glimpse Optical',
-			'I need you to find who stole the data, and report back to me.',
-			'IDS Warden is on high alert; your connection will be severed every 60 seconds.',
+			'I need you to find who stole the data, and report back to me with what was stolen..',
 			"I've left elevated access credentials hidden in this directory.",
 			'- Jared'
 		]
