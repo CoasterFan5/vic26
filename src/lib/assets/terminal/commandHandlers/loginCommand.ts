@@ -1,5 +1,5 @@
 import { getAccounts } from '../accounts/secrets';
-import { loginAccount } from '../accounts/accountState';
+import { loginAccount, type AccountState } from '../accounts/accountState';
 import { terminal } from '../terminal';
 
 export const loginCommand = (params: string[]) => {
@@ -16,30 +16,37 @@ export const loginCommand = (params: string[]) => {
 		return;
 	}
 
-	const accounts = getAccounts();
-	const expectedUsername = 'logs@it.glimpse.com';
-	const expectedPassword = accounts.logAccount.password;
-
-	if (username !== expectedUsername || password !== expectedPassword) {
-		terminal.write([
-			{
-				type: 'error',
-				content: 'Invalid username or password.'
+	switch (username) {
+		case 'logs@it.glimpse.com': {
+			if (password == getAccounts().logAccount.password) {
+				loginAccount({
+					username,
+					themeState: 'amber',
+					clearance: 1
+				});
+				terminal.writeBasicString(`Login successful. Welcome, ${username}.`);
+				return;
 			}
-		]);
-		return;
+			break;
+		}
+		case getAccounts().adminAccount.email: {
+			if (password == getAccounts().adminAccount.password) {
+				loginAccount({
+					username,
+					themeState: 'red',
+					clearance: 2
+				});
+				terminal.writeBasicString(`Login successful. Welcome, ${username}.`);
+				return;
+			}
+		}
 	}
-
-	loginAccount({
-		username,
-		themeState: 'amber',
-		clearance: 1
-	});
 
 	terminal.write([
 		{
-			type: 'line',
-			content: `Login successful. Welcome, ${username}.`
+			type: 'error',
+			content: 'Invalid username or password.'
 		}
 	]);
+	return;
 };

@@ -3,11 +3,12 @@ import { lsCommand } from '../fileRouting/ls';
 import { pwd } from '../fileRouting/pwd';
 import { readFile } from '../fileRouting/readFile';
 import { lines, terminal } from '../terminal';
+import { finalCommand } from './finalCommand';
 import { helpCommand } from './helpCommand';
 import { loginCommand } from './loginCommand';
 
 export const handleCommand = (cmd: string) => {
-	const parsed = cmd.split(' ');
+	const parsed = cmd.toLowerCase().split(' ');
 	const c = parsed[0];
 	const params = parsed.slice(1);
 	if (commands[c]) {
@@ -43,5 +44,6 @@ const commands: Record<string, (params: string[]) => void> = {
 	read: readFile,
 	login: loginCommand,
 	cd: cdCommand,
-	pwd
+	pwd,
+	scihy: finalCommand
 };

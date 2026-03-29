@@ -50,19 +50,30 @@
 <style lang="scss">
 	.green {
 		color: var(--textGreen);
+		.name {
+			color: var(--white);
+		}
 	}
 
 	.amber {
 		color: var(--textAmber);
+		.name {
+			color: var(--white);
+		}
+	}
+
+	.red {
+		color: var(--white);
+		.name {
+			color: #b98eff;
+		}
 	}
 
 	/* global termianl styles */
 	.error {
 		color: #f54242;
 	}
-	.name {
-		color: var(--white);
-	}
+
 	.bold {
 		font-weight: 700;
 	}

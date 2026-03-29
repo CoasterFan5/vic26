@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export type ThemeState = 'green' | 'amber';
+export type ThemeState = 'green' | 'amber' | 'red';
 
 export type AccountState = {
 	username: string;

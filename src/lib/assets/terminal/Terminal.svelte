@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { accountState, logoutAccount, type ThemeState } from './accounts/accountState';
 	import { handleCommand } from './commandHandlers/index';
+	import { resetActiveDirectory } from './fileRouting/directoryManager';
 	import LineRenderer from './LineRenderer.svelte';
 	import { lines, terminal } from './terminal';
 
@@ -51,6 +52,7 @@
 			if (countdownSeconds <= 0) {
 				sessionEnd = true;
 				clearInterval(i);
+				resetActiveDirectory();
 				terminal.clear();
 				terminal.write([
 					{ type: 'error', content: 'Session ended by IDS Warden. Press any key to reconnect.' }
@@ -130,6 +132,7 @@
 	bind:this={terminalElement}
 	class:green={theme == 'green'}
 	class:amber={theme == 'amber'}
+	class:redTheme={theme == 'red'}
 >
 	{#if !sessionEnd}
 		<div class="countdown-badge">
@@ -170,6 +173,10 @@
 
 	.amber {
 		background: #1e140a;
+	}
+
+	.redTheme {
+		background: #1f0203;
 	}
 
 	.terminal {
